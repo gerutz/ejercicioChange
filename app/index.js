@@ -15,7 +15,8 @@ class SimpleApp extends Component {
       estado: '',
       isLoading: true,
       isError: false,
-      label: 'Cueva Digital...'
+      label: 'Cueva Digital...',
+      arrayObjetoMoneda : []
     }
   }
 
@@ -52,45 +53,40 @@ class SimpleApp extends Component {
 
     console.log(arrayMoneda);
 
-    const base = changeInfo.base;
-    const fecha = changeInfo.date;
-    const real = changeInfo.rates.BRL;
-    const dolarNeo = changeInfo.rates.NZD;
-    const estado = changeInfo.current.condition.text;
-
     this.setState({
       label: 'Cueva Digital: ',
-      monedaOriginal: base,
-      fecha: fecha,
-      cambioReal: real,
-      cambioDolar: dolarNeo,
+      arrayObjetoMoneda : arrayMoneda,
       isLoading: false
     });
   };
 
   render() {
-    if (this.state.isLoading || this.state.isError) {
-      return (
-        <h1> {this.state.label } </h1>
-      );
-    } else {
+
+    let moneyArray = this.state.arrayObjetoMoneda.map(function(moneda){
+
+      return <Cambio nombre={moneda.nombre} valor={moneda.valor}/>
+    });
+
       return (
         <div>
-            <Cambio />
+            {moneyArray}
         </div>
       );
-    }
   }
-}
+
+}//end SimpleApp
 
 class Cambio extends Component{
   render(){
 
     return(
         <div>
-
+            <ul>
+              <li>
+                <span>Moneda : {this.props.nombre} </span>  <span> Cambio : {this.props.valor}</span>
+              </li>
+            </ul>
         </div>
-
     );
   }
 }
