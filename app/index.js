@@ -25,7 +25,8 @@ class SimpleApp extends Component {
     xmlhttp.onreadystatechange = () => {
       if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
         if (xmlhttp.status === 200) {
-          this.processWeather(JSON.parse(xmlhttp.responseText));
+          console.log(xmlhttp.responseText);
+          this.processChange(JSON.parse(xmlhttp.responseText));
         } else if (xmlhttp.status === 400) {
           console.error('ERROR :(');
           this.setState({ isLoading: false, isError: true, label: 'Info no accesible' });
@@ -36,11 +37,11 @@ class SimpleApp extends Component {
       }
     };
 
-    xmlhttp.open("GET", "http://api.apixu.com/v1/current.json?key=124c02f5469e4f2f97f140231161907&q=Buenos%20Aires", true);
+    xmlhttp.open("GET", "http://api.fixer.io/latest?base=USD", true);
     xmlhttp.send();
   }
 
-  processWeather(weatherInfo) {
+  processChange(weatherInfo) {
     const name = weatherInfo.location.name;
     const temp = weatherInfo.current.temp_c;
     const sens = weatherInfo.current.feelslike_c;
