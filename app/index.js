@@ -43,10 +43,14 @@ class SimpleApp extends Component {
 
   processChange(changeInfo) {
     const rates = changeInfo.rates;
-    Object.keys(rates).map(function(moneda){
-      console.log(moneda);
-      console.log(rates[moneda]);
+    const arrayMoneda = Object.keys(rates).map(function(moneda){
+      return {
+        nombre : moneda,
+        valor : rates[moneda]
+      };
     })
+
+    console.log(arrayMoneda);
 
     const base = changeInfo.base;
     const fecha = changeInfo.date;
