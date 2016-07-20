@@ -15,7 +15,7 @@ class SimpleApp extends Component {
       estado: '',
       isLoading: true,
       isError: false,
-      label: 'Cargando...'
+      label: 'Cueva Digital...'
     }
   }
 
@@ -41,18 +41,25 @@ class SimpleApp extends Component {
     xmlhttp.send();
   }
 
-  processChange(weatherInfo) {
-    const name = weatherInfo.location.name;
-    const temp = weatherInfo.current.temp_c;
-    const sens = weatherInfo.current.feelslike_c;
-    const estado = weatherInfo.current.condition.text;
+  processChange(changeInfo) {
+    const rates = changeInfo.rates;
+    Object.keys(rates).map(function(moneda){
+      console.log(moneda);
+      console.log(rates[moneda]);
+    })
+
+    const base = changeInfo.base;
+    const fecha = changeInfo.date;
+    const real = changeInfo.rates.BRL;
+    const dolarNeo = changeInfo.rates.NZD;
+    const estado = changeInfo.current.condition.text;
 
     this.setState({
-      label: 'Clima en: ',
-      ciudad: name,
-      temp: temp,
-      sensacion: sens,
-      estado: estado,
+      label: 'Cueva Digital: ',
+      monedaOriginal: base,
+      fecha: fecha,
+      cambioReal: real,
+      cambioDolar: dolarNeo,
       isLoading: false
     });
   };
@@ -65,15 +72,25 @@ class SimpleApp extends Component {
     } else {
       return (
         <div>
-          <h1>{ this.state.label } </h1>
-          <span> { this.state.ciudad } </span><br />
-          <span> Temperatura: { this.state.temp } C </span><br />
-          <span> Sensación Termica: {this.state.sensacion } C </span><br />
-          <span> Estado: { this.state.estado } </span><br />
+            <Cambio />
         </div>
       );
     }
   }
 }
+
+class Cambio extends Component{
+  render(){
+
+    return(
+        <div>
+
+        </div>
+
+    );
+  }
+}
+
+
 
 ReactDOM.render(<SimpleApp />, node);
